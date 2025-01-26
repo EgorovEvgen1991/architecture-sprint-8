@@ -16,7 +16,7 @@ const ReportPage: React.FC = () => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/reports`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/Reports`, {
         headers: {
           'Authorization': `Bearer ${keycloak.token}`
         }
@@ -34,6 +34,24 @@ const ReportPage: React.FC = () => {
     return <div>Loading...</div>;
   }
 
+
+  const getRoot = async () => {
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/`,
+        {
+          headers: {
+            'Authorization': `Bearer ${keycloak.token}`
+          }
+        }
+      );
+  
+    } catch (err) {
+      console.log('ошибка запроса')
+      console.log(err)
+    } finally {
+    }
+  };
+
   if (!keycloak.authenticated) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
@@ -42,6 +60,13 @@ const ReportPage: React.FC = () => {
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Login
+        </button>
+
+        <button
+          onClick={getRoot}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Запросить корень 
         </button>
       </div>
     );
@@ -67,6 +92,14 @@ const ReportPage: React.FC = () => {
             {error}
           </div>
         )}
+
+        <button
+          onClick={getRoot}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        >
+          Запросить корень 
+        </button>
+        
       </div>
     </div>
   );
